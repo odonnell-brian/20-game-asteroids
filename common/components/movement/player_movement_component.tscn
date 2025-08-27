@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b04t2onj5d0nh"]
+
+[ext_resource type="Script" uid="uid://cwoum5ucww41r" path="res://common/components/movement/player_movement_component.gd" id="1_urr4k"]
+
+[node name="PlayerMovementComponent" type="Node2D"]
+script = ExtResource("1_urr4k")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfo3n3w5tp5d1"]
+
+[ext_resource type="Script" uid="uid://lklcimfwmd57" path="res://common/components/movement/screen_wrap_component.gd" id="1_lbrip"]
+
+[node name="ScreenWrapComponent" type="Node2D"]
+script = ExtResource("1_lbrip")

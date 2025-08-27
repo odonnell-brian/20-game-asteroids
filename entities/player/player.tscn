@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnb0l2t3thcyt"]
+
+[ext_resource type="Texture2D" uid="uid://xyvqv4oju41h" path="res://entities/player/assets/ship_L.png" id="1_symyc"]
+[ext_resource type="PackedScene" uid="uid://b04t2onj5d0nh" path="res://common/components/movement/player_movement_component.tscn" id="2_abrql"]
+[ext_resource type="PackedScene" uid="uid://bfo3n3w5tp5d1" path="res://common/components/movement/screen_wrap_component.tscn" id="3_sglur"]
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_symyc")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(0.5, 0.5)
+polygon = PackedVector2Array(0, -47, -32, 48, 33, 48)
+
+[node name="PlayerMovementComponent" parent="." instance=ExtResource("2_abrql")]
+
+[node name="ScreenWrapComponent" parent="." instance=ExtResource("3_sglur")]
