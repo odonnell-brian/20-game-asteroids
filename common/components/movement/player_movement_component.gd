@@ -5,6 +5,7 @@ const DEFAULT_VELOCITY_LIMIT: float = 400.0
 
 @export var rotation_degrees_per_second: float = 180.0
 @export var acceleration: float = 500.0
+@export var deceleration: float = 250.0
 @export var max_velocity: Vector2 = Vector2(DEFAULT_VELOCITY_LIMIT, DEFAULT_VELOCITY_LIMIT)
 @export var min_velocity: Vector2 = Vector2(-DEFAULT_VELOCITY_LIMIT, -DEFAULT_VELOCITY_LIMIT)
 @export var rotation_offset_degrees: float = 90.0
@@ -21,7 +22,7 @@ func _physics_process(delta: float) -> void:
 	parent.global_rotation += deg_to_rad(rotation_input * rotation_degrees_per_second * delta)
 
 	if Input.is_action_pressed("brake"):
-		parent.velocity = parent.velocity.move_toward(Vector2.ZERO, delta * acceleration)
+		parent.velocity = parent.velocity.move_toward(Vector2.ZERO, delta * deceleration)
 	elif thrust_input != 0.0:
 		var offset_rotation: float = parent.global_rotation - deg_to_rad(rotation_offset_degrees)
 		var move_vector: Vector2 = Vector2(cos(offset_rotation), sin(offset_rotation))
