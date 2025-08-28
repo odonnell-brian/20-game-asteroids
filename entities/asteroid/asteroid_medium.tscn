@@ -1,12 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwyxemshb2iw6"]
+[gd_scene load_steps=9 format=3 uid="uid://bwyxemshb2iw6"]
 
 [ext_resource type="Texture2D" uid="uid://cdpcs6vvr8vq5" path="res://entities/asteroid/assets/meteor_detailedSmall.png" id="1_8ijwo"]
 [ext_resource type="Script" uid="uid://cdljpjstdxyxu" path="res://entities/asteroid/asteroid.gd" id="1_vg0ko"]
+[ext_resource type="PackedScene" uid="uid://bmv07dwwo87ia" path="res://entities/asteroid/asteroid_small.tscn" id="2_d2ycm"]
 [ext_resource type="PackedScene" uid="uid://ck0wsv5awg5r4" path="res://common/components/movement/simple_movement_component.tscn" id="3_32l4f"]
 [ext_resource type="PackedScene" uid="uid://bfo3n3w5tp5d1" path="res://common/components/movement/screen_wrap_component.tscn" id="4_tl1p8"]
+[ext_resource type="PackedScene" uid="uid://dsc1gbyxacfou" path="res://common/components/health/health_component.tscn" id="5_32l4f"]
+[ext_resource type="PackedScene" uid="uid://cqtwmijboky64" path="res://common/components/health/damage_component.tscn" id="6_tl1p8"]
 
-[node name="AsteroidMedium" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_tl1p8"]
+radius = 27.074
+
+[node name="AsteroidMedium" type="Node2D" node_paths=PackedStringArray("health_component", "movement_component")]
 script = ExtResource("1_vg0ko")
+health_component = NodePath("HealthComponent")
+movement_component = NodePath("SimpleMovementComponent")
+spawn_on_destroy = ExtResource("2_d2ycm")
+num_to_spawn = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.9, 0.9)
@@ -16,3 +26,17 @@ texture = ExtResource("1_8ijwo")
 speed = 95.0
 
 [node name="ScreenWrapComponent" parent="." instance=ExtResource("4_tl1p8")]
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_32l4f")]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
+shape = SubResource("CircleShape2D_tl1p8")
+
+[node name="DamageComponent" parent="." instance=ExtResource("6_tl1p8")]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageComponent"]
+shape = SubResource("CircleShape2D_tl1p8")

@@ -8,8 +8,9 @@ const FX_STEP_SCALAR: float = 4.0
 @export var input_component: PlayerInputComponent
 
 @export_category("Optional Dependencies")
-@export var thruster_sprite: Sprite2D
-@export var brake_sprite: Sprite2D
+@export var thruster_sprite: Node2D
+@export var reverse_thruster_sprite: Node2D
+@export var brake_sprite: Node2D
 
 @export_category("Settings")
 @export var rotation_degrees_per_second: float = 180.0
@@ -19,10 +20,12 @@ const FX_STEP_SCALAR: float = 4.0
 @export var rotation_offset_degrees: float = 90.0
 
 var move_vector: Vector2
+var current_velocity: Vector2
 
 func _ready() -> void:
-	thruster_sprite.modulate.a = 0.0
-	brake_sprite.modulate.a = 0.0
+	try_set_node_alpha(thruster_sprite, 0.0)
+	try_set_node_alpha(reverse_thruster_sprite, 0.0)
+	try_set_node_alpha(brake_sprite, 0.0)
 
 func _physics_process(delta: float) -> void:
 	if not get_parent() is CharacterBody2D:
@@ -33,23 +36,39 @@ func _physics_process(delta: float) -> void:
 
 	parent.rotate(deg_to_rad(input_data.rotation * rotation_degrees_per_second * delta))
 
-	if input_data.brake:
-		parent.velocity = parent.velocity.move_toward(Vector2.ZERO, delta * deceleration)
-	elif input_data.thrust != 0.0:
-		# Keeping this for records of what is going on behing the scenes of the rotated() call
-		#var offset_rotation: float = parent.global_rotation - deg_to_rad(rotation_offset_degrees)
-		#var move_vector: Vector2 = Vector2(cos(offset_rotation), sin(offset_rotation))
-		move_vector = Vector2.UP.rotated(parent.global_rotation)
-		parent.velocity += (move_vector * acceleration *  input_data.thrust * delta)
-		parent.velocity = parent.velocity.clamp(-1 * max_velocity, max_velocity)
+	var new_velocity: Vector2 = calculate_new_velocity(input_data, delta, parent.global_rotation)
+	current_velocity = new_velocity
+	parent.velocity = current_velocity
 
 	handle_vfx(input_data, delta)
 	parent.move_and_slide()
 
-func handle_vfx(input_data: PlayerInputComponent.InputData, delta: float) -> void:
-	thruster_sprite.modulate.a = move_toward(thruster_sprite.modulate.a, max(0.0, input_data.thrust), delta * FX_STEP_SCALAR)
-	brake_sprite.modulate.a = move_toward(brake_sprite.modulate.a, max(0.0, -1 * input_data.thrust), delta * FX_STEP_SCALAR)
+func calculate_new_velocity(input_data: PlayerInputComponent.InputData, delta: float, node_rotation: float) -> Vector2:
+	var new_velocity: Vector2 = current_velocity
+	if input_data.brake:
+		new_velocity = current_velocity.move_toward(Vector2.ZERO, delta * deceleration)
+	elif input_data.thrust != 0.0:
+		# Keeping this for records of what is going on behing the scenes of the rotated() call
+		#var offset_rotation: float = parent.global_rotation - deg_to_rad(rotation_offset_degrees)
+		#var move_vector: Vector2 = Vector2(cos(offset_rotation), sin(offset_rotation))
+		move_vector = Vector2.UP.rotated(node_rotation)
+		new_velocity = current_velocity + (move_vector * acceleration *  input_data.thrust * delta)
+		new_velocity = new_velocity.clamp(-1 * max_velocity, max_velocity)
 
+	return new_velocity
+
+func handle_vfx(input_data: PlayerInputComponent.InputData, delta: float) -> void:
+	modulate_node_alpha(thruster_sprite, max(0.0, input_data.thrust), delta)
+	modulate_node_alpha(reverse_thruster_sprite, max(0.0, -1 * input_data.thrust), delta)
+	modulate_node_alpha(brake_sprite, int(input_data.brake), delta)
+
+func modulate_node_alpha(node: Node2D, target_value: float, delta: float) -> void:
+	if node:
+		node.modulate.a = move_toward(node.modulate.a, target_value, delta * FX_STEP_SCALAR)
+
+func try_set_node_alpha(node: Node2D, alpha: float) -> void:
+	if node:
+		node.modulate.a = alpha
 
 func get_velocity() -> Vector2:
-	return (get_parent() as CharacterBody2D).velocity
+	return current_velocity

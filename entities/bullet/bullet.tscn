@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://ca1ywqx0fov7o"]
+[gd_scene load_steps=8 format=3 uid="uid://ca1ywqx0fov7o"]
 
 [ext_resource type="Script" uid="uid://bclwsvip87yyh" path="res://entities/bullet/bullet.gd" id="1_25cl0"]
 [ext_resource type="Texture2D" uid="uid://d0r17y5eahncg" path="res://entities/bullet/assets/star_tiny.png" id="1_78c8h"]
 [ext_resource type="PackedScene" uid="uid://ck0wsv5awg5r4" path="res://common/components/movement/simple_movement_component.tscn" id="2_2kyv7"]
 [ext_resource type="PackedScene" uid="uid://dbga1y7cdujgi" path="res://common/components/lifecycle/destroy_off_screen_component.tscn" id="3_5h0jh"]
+[ext_resource type="PackedScene" uid="uid://dsc1gbyxacfou" path="res://common/components/health/health_component.tscn" id="5_b4ffb"]
+[ext_resource type="PackedScene" uid="uid://cqtwmijboky64" path="res://common/components/health/damage_component.tscn" id="6_h0hdh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h0hdh"]
+size = Vector2(4, 4)
 
 [node name="Bullet" type="Node2D"]
 top_level = true
@@ -20,3 +25,17 @@ speed = 1000.0
 visibility_notifier = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="DestroyOffScreenComponent"]
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_b4ffb")]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
+shape = SubResource("RectangleShape2D_h0hdh")
+
+[node name="DamageComponent" parent="." instance=ExtResource("6_h0hdh")]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageComponent"]
+shape = SubResource("RectangleShape2D_h0hdh")
