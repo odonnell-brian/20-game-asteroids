@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://daq87bed4e65s"]
+
+[ext_resource type="Texture2D" uid="uid://c5ciuehuewcw0" path="res://entities/asteroid/assets/meteor_detailedLarge.png" id="1_dqbf4"]
+[ext_resource type="Script" uid="uid://cdljpjstdxyxu" path="res://entities/asteroid/asteroid.gd" id="1_m5ls8"]
+[ext_resource type="PackedScene" uid="uid://ck0wsv5awg5r4" path="res://common/components/movement/simple_movement_component.tscn" id="3_fqrve"]
+[ext_resource type="PackedScene" uid="uid://bfo3n3w5tp5d1" path="res://common/components/movement/screen_wrap_component.tscn" id="4_wk8ix"]
+
+[node name="AsteroidLarge" type="Node2D"]
+script = ExtResource("1_m5ls8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_dqbf4")
+
+[node name="SimpleMovementComponent" parent="." instance=ExtResource("3_fqrve")]
+speed = 90.0
+
+[node name="ScreenWrapComponent" parent="." instance=ExtResource("4_wk8ix")]

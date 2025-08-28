@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmv07dwwo87ia"]
+
+[ext_resource type="Script" uid="uid://cdljpjstdxyxu" path="res://entities/asteroid/asteroid.gd" id="1_2m4eu"]
+[ext_resource type="Texture2D" uid="uid://osbi3x0ai657" path="res://entities/asteroid/assets/star_tiny.png" id="1_msypq"]
+[ext_resource type="PackedScene" uid="uid://ck0wsv5awg5r4" path="res://common/components/movement/simple_movement_component.tscn" id="3_bejii"]
+[ext_resource type="PackedScene" uid="uid://bfo3n3w5tp5d1" path="res://common/components/movement/screen_wrap_component.tscn" id="4_ujanj"]
+
+[node name="AsteroidSmall" type="Node2D"]
+script = ExtResource("1_2m4eu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_msypq")
+
+[node name="SimpleMovementComponent" parent="." instance=ExtResource("3_bejii")]
+
+[node name="ScreenWrapComponent" parent="." instance=ExtResource("4_ujanj")]

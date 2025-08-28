@@ -1,12 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://ch76vrg4vy61d"]
+[gd_scene load_steps=5 format=3 uid="uid://ch76vrg4vy61d"]
 
 [ext_resource type="PackedScene" uid="uid://dnb0l2t3thcyt" path="res://entities/player/player.tscn" id="1_uhqqe"]
-[ext_resource type="PackedScene" uid="uid://ca1ywqx0fov7o" path="res://entities/bullet/bullet.tscn" id="2_ia1lp"]
+[ext_resource type="PackedScene" uid="uid://daq87bed4e65s" path="res://entities/asteroid/asteroid_large.tscn" id="2_coq8p"]
+[ext_resource type="PackedScene" uid="uid://bwyxemshb2iw6" path="res://entities/asteroid/asteroid_medium.tscn" id="3_2nij2"]
+[ext_resource type="PackedScene" uid="uid://bmv07dwwo87ia" path="res://entities/asteroid/asteroid_small.tscn" id="4_7cbxl"]
 
 [node name="TestScene" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1280, 720)
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_uhqqe")]
 position = Vector2(630, 363)
 
-[node name="Bullet" parent="." instance=ExtResource("2_ia1lp")]
-position = Vector2(629, 311)
+[node name="AsteroidLarge" parent="." instance=ExtResource("2_coq8p")]
+position = Vector2(660, 216)
+
+[node name="AsteroidMedium" parent="." instance=ExtResource("3_2nij2")]
+position = Vector2(794, 217)
+
+[node name="AsteroidSmall" parent="." instance=ExtResource("4_7cbxl")]
+position = Vector2(863, 216)

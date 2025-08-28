@@ -2,19 +2,27 @@ class_name PlayerMovementComponent
 extends Node2D
 
 const DEFAULT_VELOCITY_LIMIT: float = 400.0
+const FX_STEP_SCALAR: float = 4.0
 
 @export_category("Dependencies")
 @export var input_component: PlayerInputComponent
+
+@export_category("Optional Dependencies")
+@export var thruster_sprite: Sprite2D
+@export var brake_sprite: Sprite2D
 
 @export_category("Settings")
 @export var rotation_degrees_per_second: float = 180.0
 @export var acceleration: float = 500.0
 @export var deceleration: float = 250.0
 @export var max_velocity: Vector2 = Vector2(DEFAULT_VELOCITY_LIMIT, DEFAULT_VELOCITY_LIMIT)
-@export var min_velocity: Vector2 = Vector2(-DEFAULT_VELOCITY_LIMIT, -DEFAULT_VELOCITY_LIMIT)
 @export var rotation_offset_degrees: float = 90.0
 
 var move_vector: Vector2
+
+func _ready() -> void:
+	thruster_sprite.modulate.a = 0.0
+	brake_sprite.modulate.a = 0.0
 
 func _physics_process(delta: float) -> void:
 	if not get_parent() is CharacterBody2D:
@@ -33,9 +41,15 @@ func _physics_process(delta: float) -> void:
 		#var move_vector: Vector2 = Vector2(cos(offset_rotation), sin(offset_rotation))
 		move_vector = Vector2.UP.rotated(parent.global_rotation)
 		parent.velocity += (move_vector * acceleration *  input_data.thrust * delta)
-		parent.velocity = parent.velocity.clamp(min_velocity, max_velocity)
+		parent.velocity = parent.velocity.clamp(-1 * max_velocity, max_velocity)
 
+	handle_vfx(input_data, delta)
 	parent.move_and_slide()
+
+func handle_vfx(input_data: PlayerInputComponent.InputData, delta: float) -> void:
+	thruster_sprite.modulate.a = move_toward(thruster_sprite.modulate.a, max(0.0, input_data.thrust), delta * FX_STEP_SCALAR)
+	brake_sprite.modulate.a = move_toward(brake_sprite.modulate.a, max(0.0, -1 * input_data.thrust), delta * FX_STEP_SCALAR)
+
 
 func get_velocity() -> Vector2:
 	return (get_parent() as CharacterBody2D).velocity

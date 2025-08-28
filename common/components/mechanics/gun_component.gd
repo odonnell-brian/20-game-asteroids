@@ -11,10 +11,6 @@ extends Node2D
 
 @onready var cooldown_timer: Timer = $Timer
 
-func _ready() -> void:
-	cooldown_timer.stop()
-	cooldown_timer.timeout.connect(on_cooldown_timeout)
-
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("shoot"):
 		try_shoot(delta)
@@ -30,6 +26,3 @@ func try_shoot(delta: float) -> void:
 	bullet.set_parent_velocity(movement_component.get_velocity() * delta)
 
 	cooldown_timer.start(cooldown_time)
-
-func on_cooldown_timeout() -> void:
-	print("timeout")

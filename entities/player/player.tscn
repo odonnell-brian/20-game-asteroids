@@ -1,23 +1,39 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnb0l2t3thcyt"]
+[gd_scene load_steps=8 format=3 uid="uid://dnb0l2t3thcyt"]
 
 [ext_resource type="Texture2D" uid="uid://xyvqv4oju41h" path="res://entities/player/assets/ship_L.png" id="1_symyc"]
+[ext_resource type="Texture2D" uid="uid://dvcja4nadgilg" path="res://entities/player/assets/effect_yellow.png" id="2_8fjmc"]
 [ext_resource type="PackedScene" uid="uid://b04t2onj5d0nh" path="res://common/components/movement/player_movement_component.tscn" id="2_abrql"]
+[ext_resource type="Texture2D" uid="uid://uuqm7nhg5wkr" path="res://entities/player/assets/effect_purple.png" id="2_qiwj3"]
 [ext_resource type="PackedScene" uid="uid://bfo3n3w5tp5d1" path="res://common/components/movement/screen_wrap_component.tscn" id="3_sglur"]
 [ext_resource type="PackedScene" uid="uid://dwxm107wmbp67" path="res://common/components/input/player_input_component.tscn" id="4_bls4j"]
 [ext_resource type="PackedScene" uid="uid://bt58wp5s25h0j" path="res://common/components/mechanics/gun_component.tscn" id="5_fkugw"]
 
 [node name="Player" type="CharacterBody2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="SpriteScaler" type="Node2D" parent="."]
 scale = Vector2(0.5, 0.5)
+
+[node name="ThrusterSprite" type="Sprite2D" parent="SpriteScaler"]
+position = Vector2(0, 96)
+texture = ExtResource("2_8fjmc")
+
+[node name="ReverseThrustSprite" type="Sprite2D" parent="SpriteScaler"]
+position = Vector2(0, -32)
+rotation = 3.14159
+texture = ExtResource("2_qiwj3")
+
+[node name="ShipSprite" type="Sprite2D" parent="SpriteScaler"]
 texture = ExtResource("1_symyc")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 scale = Vector2(0.5, 0.5)
 polygon = PackedVector2Array(0, -47, -32, 48, 33, 48)
 
-[node name="PlayerMovementComponent" parent="." node_paths=PackedStringArray("input_component") instance=ExtResource("2_abrql")]
+[node name="PlayerMovementComponent" parent="." node_paths=PackedStringArray("input_component", "thruster_sprite", "brake_sprite") instance=ExtResource("2_abrql")]
 input_component = NodePath("../PlayerInputComponent")
+thruster_sprite = NodePath("../SpriteScaler/ThrusterSprite")
+brake_sprite = NodePath("../SpriteScaler/ReverseThrustSprite")
 
 [node name="ScreenWrapComponent" parent="." instance=ExtResource("3_sglur")]
 
