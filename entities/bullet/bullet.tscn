@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://ca1ywqx0fov7o"]
+
+[ext_resource type="Script" uid="uid://bclwsvip87yyh" path="res://entities/bullet/bullet.gd" id="1_25cl0"]
+[ext_resource type="Texture2D" uid="uid://d0r17y5eahncg" path="res://entities/bullet/assets/star_tiny.png" id="1_78c8h"]
+[ext_resource type="PackedScene" uid="uid://ck0wsv5awg5r4" path="res://common/components/movement/simple_movement_component.tscn" id="2_2kyv7"]
+[ext_resource type="PackedScene" uid="uid://dbga1y7cdujgi" path="res://common/components/lifecycle/destroy_off_screen_component.tscn" id="3_5h0jh"]
+
+[node name="Bullet" type="Node2D"]
+top_level = true
+script = ExtResource("1_25cl0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("1_78c8h")
+
+[node name="SimpleMovementComponent" parent="." instance=ExtResource("2_2kyv7")]
+speed = 1000.0
+
+[node name="DestroyOffScreenComponent" parent="." node_paths=PackedStringArray("visibility_notifier") instance=ExtResource("3_5h0jh")]
+visibility_notifier = NodePath("VisibleOnScreenNotifier2D")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="DestroyOffScreenComponent"]

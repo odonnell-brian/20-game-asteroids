@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bt58wp5s25h0j"]
+
+[ext_resource type="Script" uid="uid://dvtotlkqum5t7" path="res://common/components/mechanics/gun_component.gd" id="1_3gsfy"]
+[ext_resource type="PackedScene" uid="uid://ca1ywqx0fov7o" path="res://entities/bullet/bullet.tscn" id="2_cjrsn"]
+
+[node name="GunComponent" type="Node2D"]
+script = ExtResource("1_3gsfy")
+bullet_scene = ExtResource("2_cjrsn")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

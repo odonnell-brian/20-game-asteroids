@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnb0l2t3thcyt"]
+[gd_scene load_steps=6 format=3 uid="uid://dnb0l2t3thcyt"]
 
 [ext_resource type="Texture2D" uid="uid://xyvqv4oju41h" path="res://entities/player/assets/ship_L.png" id="1_symyc"]
 [ext_resource type="PackedScene" uid="uid://b04t2onj5d0nh" path="res://common/components/movement/player_movement_component.tscn" id="2_abrql"]
 [ext_resource type="PackedScene" uid="uid://bfo3n3w5tp5d1" path="res://common/components/movement/screen_wrap_component.tscn" id="3_sglur"]
+[ext_resource type="PackedScene" uid="uid://dwxm107wmbp67" path="res://common/components/input/player_input_component.tscn" id="4_bls4j"]
+[ext_resource type="PackedScene" uid="uid://bt58wp5s25h0j" path="res://common/components/mechanics/gun_component.tscn" id="5_fkugw"]
 
 [node name="Player" type="CharacterBody2D"]
 
@@ -14,6 +16,16 @@ texture = ExtResource("1_symyc")
 scale = Vector2(0.5, 0.5)
 polygon = PackedVector2Array(0, -47, -32, 48, 33, 48)
 
-[node name="PlayerMovementComponent" parent="." instance=ExtResource("2_abrql")]
+[node name="PlayerMovementComponent" parent="." node_paths=PackedStringArray("input_component") instance=ExtResource("2_abrql")]
+input_component = NodePath("../PlayerInputComponent")
 
 [node name="ScreenWrapComponent" parent="." instance=ExtResource("3_sglur")]
+
+[node name="PlayerInputComponent" parent="." instance=ExtResource("4_bls4j")]
+
+[node name="GunComponent" parent="." node_paths=PackedStringArray("movement_component", "shoot_point") instance=ExtResource("5_fkugw")]
+movement_component = NodePath("../PlayerMovementComponent")
+shoot_point = NodePath("ShootMarker")
+
+[node name="ShootMarker" type="Marker2D" parent="GunComponent"]
+position = Vector2(0, -28)

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbga1y7cdujgi"]
+
+[ext_resource type="Script" uid="uid://co3bf5ag8qe5u" path="res://common/components/lifecycle/destroy_off_screen_component.gd" id="1_eeo1t"]
+
+[node name="DestroyOffScreenComponent" type="Node2D"]
+script = ExtResource("1_eeo1t")
