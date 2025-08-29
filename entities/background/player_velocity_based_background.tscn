@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://crnaf3xhorbn8"]
+
+[ext_resource type="Script" uid="uid://bdw41x8j8n26n" path="res://entities/background/background_controller.gd" id="1_8l5gi"]
+[ext_resource type="PackedScene" uid="uid://ctcc6ho466frw" path="res://entities/background/background.tscn" id="2_msq0e"]
+
+[node name="PlayerVelocityBasedBackground" type="Node2D" node_paths=PackedStringArray("parallax")]
+script = ExtResource("1_8l5gi")
+parallax = NodePath("Parallax2D")
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+repeat_size = Vector2(1600, 1000)
+repeat_times = 2
+
+[node name="Sprites" parent="Parallax2D" instance=ExtResource("2_msq0e")]

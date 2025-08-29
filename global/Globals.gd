@@ -13,4 +13,5 @@ var scene_manager: SceneManager
 var game_world: GameWorld
 var gui_manager: GuiManager
 
+var player_movement_data: Player.PlayerData
 var player_score: int = 0

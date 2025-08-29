@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxt7scov730o1"]
+[gd_scene load_steps=3 format=3 uid="uid://bxt7scov730o1"]
 
 [ext_resource type="PackedScene" uid="uid://dnb0l2t3thcyt" path="res://entities/player/player.tscn" id="1_80vhd"]
+[ext_resource type="PackedScene" uid="uid://crnaf3xhorbn8" path="res://entities/background/player_velocity_based_background.tscn" id="1_hjsbj"]
 
 [node name="Level" type="Node2D"]
 process_mode = 1
@@ -11,6 +12,8 @@ custom_minimum_size = Vector2(1280, 720)
 offset_right = 1280.0
 offset_bottom = 720.0
 color = Color(0, 0, 0, 1)
+
+[node name="Background" parent="." instance=ExtResource("1_hjsbj")]
 
 [node name="Player" parent="." instance=ExtResource("1_80vhd")]
 position = Vector2(640, 360)

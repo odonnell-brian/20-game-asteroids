@@ -13,9 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://dsc1gbyxacfou" path="res://common/components/health/health_component.tscn" id="10_wvtmh"]
 [ext_resource type="PackedScene" uid="uid://bwqly23ruhdje" path="res://common/components/visual/blink_component.tscn" id="11_7thud"]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health_component")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health_component", "movement_component")]
 script = ExtResource("1_a1qjk")
 health_component = NodePath("HealthComponent")
+movement_component = NodePath("PlayerMovementComponent")
 
 [node name="SpriteScaler" type="Node2D" parent="."]
 scale = Vector2(0.5, 0.5)

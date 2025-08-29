@@ -72,3 +72,6 @@ func try_set_node_alpha(node: Node2D, alpha: float) -> void:
 
 func get_velocity() -> Vector2:
 	return current_velocity
+
+func get_velocity_percent() -> Vector2:
+	return Vector2(current_velocity.x / max_velocity.x, current_velocity.y / max_velocity.y)

@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=4 uid="uid://jd84f5y571hh"]
+[gd_scene load_steps=15 format=4 uid="uid://jd84f5y571hh"]
 
 [ext_resource type="Script" uid="uid://dc374h240gf3l" path="res://ui/game_over/game_over.gd" id="1_5nexe"]
-[ext_resource type="FontFile" uid="uid://civv4xh1ilwn5" path="res://ui/assets/AlphaProta-Italic.ttf" id="1_ns3eh"]
+[ext_resource type="Theme" uid="uid://dblwdeylve0xj" path="res://ui/new_theme.tres" id="2_0hcq4"]
 [ext_resource type="Texture2D" uid="uid://bigcd8xltc74" path="res://ui/game_over/assets/flatDark32.png" id="3_6lpyu"]
+[ext_resource type="FontFile" uid="uid://8tuol5p3yr12" path="res://ui/assets/AlphaProta-Regular.ttf" id="3_cu5ql"]
 [ext_resource type="Texture2D" uid="uid://tyog2x51j5do" path="res://ui/game_over/assets/flatDark34.png" id="4_0hcq4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6lpyu"]
@@ -430,7 +431,9 @@ theme_override_constants/margin_top = 20
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer/MarginContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("1_ns3eh")
+theme = ExtResource("2_0hcq4")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_cu5ql")
 theme_override_font_sizes/font_size = 30
 text = "RESTART"
 
