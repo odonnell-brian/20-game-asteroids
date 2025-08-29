@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqvbt3ayj2y7x"]
+
+[ext_resource type="Script" uid="uid://beyratcxhuj7p" path="res://ui/main_menu/main_menu.gd" id="1_i5wg5"]
+[ext_resource type="Shader" uid="uid://cugniqhi41e17" path="res://ui/main_menu/main_menu.gdshader" id="2_3c04x"]
+[ext_resource type="FontFile" uid="uid://8tuol5p3yr12" path="res://ui/assets/AlphaProta-Regular.ttf" id="3_joh67"]
+[ext_resource type="FontFile" uid="uid://civv4xh1ilwn5" path="res://ui/assets/AlphaProta-Italic.ttf" id="4_u184e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rmr83"]
+shader = ExtResource("2_3c04x")
+shader_parameter/highlight_color = Color(0.662745, 0.603922, 0.160784, 1)
+shader_parameter/frequency = 3.0
+shader_parameter/highlight_speed = 0.5
+shader_parameter/highlight_width = 4.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_8uxxo"]
+font = ExtResource("3_joh67")
+font_size = 72
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("play_button", "exit_button")]
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i5wg5")
+play_button = NodePath("MarginContainer/HBoxContainer/PlayButton")
+exit_button = NodePath("MarginContainer/HBoxContainer/ExitButton")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Title" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer"]
+material = SubResource("ShaderMaterial_rmr83")
+layout_mode = 2
+text = "ASTEROIDS"
+label_settings = SubResource("LabelSettings_8uxxo")
+
+[node name="PlayButton" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("4_u184e")
+theme_override_font_sizes/font_size = 48
+text = "PLAY"
+
+[node name="ExitButton" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("4_u184e")
+theme_override_font_sizes/font_size = 32
+text = "EXIT"

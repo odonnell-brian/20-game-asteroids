@@ -11,6 +11,7 @@ signal health_depleted()
 @export_category("OptionalDependencies")
 @export var destroy_fx: PackedScene
 @export var invuln_timer: Timer
+@export var hit_fx: VfxComponent
 
 var current_health: int
 var is_invulnerable: bool = false
@@ -33,6 +34,9 @@ func take_damage(amount: int) -> void:
 	current_health = maxi(current_health - amount, 0)
 	health_changed.emit(current_health)
 
+	if hit_fx:
+		hit_fx.do_fx()
+
 	if current_health == 0:
 		health_depleted.emit()
 		try_destroy()
@@ -51,7 +55,7 @@ func try_destroy() -> void:
 	if destroy_fx:
 		var fx: Node2D = destroy_fx.instantiate() as Node2D
 		fx.global_position = global_position
-		Globals.game_world.add_child(fx)
+		Globals.game_world.add_level_child(fx)
 
 	get_parent().queue_free()
 

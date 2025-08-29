@@ -23,7 +23,7 @@ func on_health_depleted() -> void:
 	for i in num_to_spawn:
 		var spawn = spawn_on_destroy.instantiate() as Node2D
 		spawn.global_position = global_position
-		Globals.game_world.call_deferred("add_child", spawn)
+		Globals.game_world.call_deferred("add_level_child", spawn)
 
 		if spawn is Asteroid:
 			(spawn as Asteroid).impart_parent_velocity(movement_component.current_velocity)

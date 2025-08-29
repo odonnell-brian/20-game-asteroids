@@ -1,5 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://dnb0l2t3thcyt"]
 
+[ext_resource type="Script" uid="uid://blfux5dwor55c" path="res://entities/player/player.gd" id="1_a1qjk"]
 [ext_resource type="Texture2D" uid="uid://xyvqv4oju41h" path="res://entities/player/assets/ship_L.png" id="1_symyc"]
 [ext_resource type="Texture2D" uid="uid://dvcja4nadgilg" path="res://entities/player/assets/effect_yellow.png" id="2_8fjmc"]
 [ext_resource type="PackedScene" uid="uid://b04t2onj5d0nh" path="res://common/components/movement/player_movement_component.tscn" id="2_abrql"]
@@ -9,70 +10,12 @@
 [ext_resource type="PackedScene" uid="uid://dwxm107wmbp67" path="res://common/components/input/player_input_component.tscn" id="4_bls4j"]
 [ext_resource type="PackedScene" uid="uid://bt58wp5s25h0j" path="res://common/components/mechanics/gun_component.tscn" id="5_fkugw"]
 [ext_resource type="PackedScene" uid="uid://cqtwmijboky64" path="res://common/components/health/damage_component.tscn" id="9_bectd"]
+[ext_resource type="PackedScene" uid="uid://dsc1gbyxacfou" path="res://common/components/health/health_component.tscn" id="10_wvtmh"]
+[ext_resource type="PackedScene" uid="uid://bwqly23ruhdje" path="res://common/components/visual/blink_component.tscn" id="11_7thud"]
 
-[sub_resource type="Animation" id="Animation_26q78"]
-resource_name = "pulse"
-length = 0.5
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Front:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0.25, 0.25), Vector2(1, 1), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Back:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0.25, 0.25), Vector2(1, 1), Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_bectd"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Front:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Back:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_wvtmh"]
-_data = {
-&"RESET": SubResource("Animation_bectd"),
-&"pulse": SubResource("Animation_26q78")
-}
-
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health_component")]
+script = ExtResource("1_a1qjk")
+health_component = NodePath("HealthComponent")
 
 [node name="SpriteScaler" type="Node2D" parent="."]
 scale = Vector2(0.5, 0.5)
@@ -94,14 +37,8 @@ texture = ExtResource("4_26q78")
 
 [node name="Back" type="Sprite2D" parent="SpriteScaler/BrakeSprites"]
 position = Vector2(0, 34)
-rotation = 1573.94
+rotation = 3.14159
 texture = ExtResource("4_26q78")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="SpriteScaler/BrakeSprites"]
-libraries = {
-&"": SubResource("AnimationLibrary_wvtmh")
-}
-autoplay = "pulse"
 
 [node name="ShipSprite" type="Sprite2D" parent="SpriteScaler"]
 texture = ExtResource("1_symyc")
@@ -137,3 +74,20 @@ cooldown_time = 1.0
 visible = false
 scale = Vector2(0.5, 0.5)
 polygon = PackedVector2Array(0, -47, -32, 48, 33, 48)
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("invuln_timer", "hit_fx") instance=ExtResource("10_wvtmh")]
+collision_mask = 0
+destroy_on_deplete = false
+invuln_timer = NodePath("Timer")
+hit_fx = NodePath("../BlinkComponent")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HealthComponent"]
+visible = false
+scale = Vector2(0.5, 0.5)
+polygon = PackedVector2Array(0, -47, -32, 48, 33, 48)
+
+[node name="Timer" type="Timer" parent="HealthComponent"]
+wait_time = 2.0
+
+[node name="BlinkComponent" parent="." node_paths=PackedStringArray("target") instance=ExtResource("11_7thud")]
+target = NodePath("../SpriteScaler")
