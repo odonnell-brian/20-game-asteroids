@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dnb0l2t3thcyt"]
+[gd_scene load_steps=13 format=3 uid="uid://dnb0l2t3thcyt"]
 
 [ext_resource type="Texture2D" uid="uid://xyvqv4oju41h" path="res://entities/player/assets/ship_L.png" id="1_symyc"]
 [ext_resource type="Texture2D" uid="uid://dvcja4nadgilg" path="res://entities/player/assets/effect_yellow.png" id="2_8fjmc"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://4bq60xybeh05" path="res://entities/player/assets/shield1.png" id="4_26q78"]
 [ext_resource type="PackedScene" uid="uid://dwxm107wmbp67" path="res://common/components/input/player_input_component.tscn" id="4_bls4j"]
 [ext_resource type="PackedScene" uid="uid://bt58wp5s25h0j" path="res://common/components/mechanics/gun_component.tscn" id="5_fkugw"]
+[ext_resource type="PackedScene" uid="uid://cqtwmijboky64" path="res://common/components/health/damage_component.tscn" id="9_bectd"]
 
 [sub_resource type="Animation" id="Animation_26q78"]
 resource_name = "pulse"
@@ -126,3 +127,13 @@ shoot_point = NodePath("ShootMarker")
 
 [node name="ShootMarker" type="Marker2D" parent="GunComponent"]
 position = Vector2(0, -28)
+
+[node name="DamageComponent" parent="." instance=ExtResource("9_bectd")]
+collision_layer = 0
+collision_mask = 4
+cooldown_time = 1.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DamageComponent"]
+visible = false
+scale = Vector2(0.5, 0.5)
+polygon = PackedVector2Array(0, -47, -32, 48, 33, 48)

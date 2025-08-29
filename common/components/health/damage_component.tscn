@@ -4,3 +4,6 @@
 
 [node name="DamageComponent" type="Area2D"]
 script = ExtResource("1_f2g6s")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

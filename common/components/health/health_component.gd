@@ -4,10 +4,12 @@ extends Area2D
 signal health_changed(current_health: int)
 signal health_depleted()
 
+@export_category("Settings")
 @export var max_health: int = 1
 @export var destroy_on_deplete: bool = true
-@export var destroy_fx: PackedScene
 
+@export_category("OptionalDependencies")
+@export var destroy_fx: PackedScene
 @export var invuln_timer: Timer
 
 var current_health: int
