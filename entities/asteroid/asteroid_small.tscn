@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmv07dwwo87ia"]
+[gd_scene load_steps=9 format=3 uid="uid://bmv07dwwo87ia"]
 
 [ext_resource type="Script" uid="uid://cdljpjstdxyxu" path="res://entities/asteroid/asteroid.gd" id="1_2m4eu"]
 [ext_resource type="Texture2D" uid="uid://osbi3x0ai657" path="res://entities/asteroid/assets/star_tiny.png" id="1_msypq"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bfo3n3w5tp5d1" path="res://common/components/movement/screen_wrap_component.tscn" id="4_ujanj"]
 [ext_resource type="PackedScene" uid="uid://dsc1gbyxacfou" path="res://common/components/health/health_component.tscn" id="5_ujanj"]
 [ext_resource type="PackedScene" uid="uid://cqtwmijboky64" path="res://common/components/health/damage_component.tscn" id="6_h2egn"]
+[ext_resource type="PackedScene" uid="uid://mdhyhgba44ni" path="res://common/components/mechanics/score_component.tscn" id="7_h2egn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yh8mf"]
 radius = 13.0
@@ -35,3 +36,7 @@ collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageComponent"]
 shape = SubResource("CircleShape2D_yh8mf")
+
+[node name="ScoreComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("7_h2egn")]
+health_component = NodePath("../HealthComponent")
+amount = 300

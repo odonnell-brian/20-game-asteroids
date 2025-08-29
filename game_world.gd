@@ -22,8 +22,12 @@ func instantiate_level() -> void:
 	var level_node: Node2D = level.instantiate() as Node2D
 	add_child(level_node)
 	current_level_node = level_node
+	Globals.player_score = 0
 
 func init_gui() -> void:
+	var hud_scene: PackedScene = load("res://ui/hud/hud.tscn")
+	Globals.gui_manager.call_deferred("add_child", hud_scene.instantiate())
+
 	var pause_menu: PackedScene = load("res://ui/pause_menu/pause_menu.tscn")
 	Globals.gui_manager.call_deferred("add_child", pause_menu.instantiate())
 

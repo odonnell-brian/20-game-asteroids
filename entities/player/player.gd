@@ -6,3 +6,4 @@ extends CharacterBody2D
 
 func _ready() -> void:
 	health_component.health_depleted.connect(Globals.player_destroyed.emit)
+	health_component.health_changed.connect(Globals.player_lives_changed.emit)
