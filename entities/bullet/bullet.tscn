@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ca1ywqx0fov7o"]
+[gd_scene load_steps=11 format=3 uid="uid://ca1ywqx0fov7o"]
 
 [ext_resource type="Script" uid="uid://bclwsvip87yyh" path="res://entities/bullet/bullet.gd" id="1_25cl0"]
 [ext_resource type="Texture2D" uid="uid://d0r17y5eahncg" path="res://entities/bullet/assets/star_tiny.png" id="1_78c8h"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://dbga1y7cdujgi" path="res://common/components/lifecycle/destroy_off_screen_component.tscn" id="3_5h0jh"]
 [ext_resource type="PackedScene" uid="uid://dsc1gbyxacfou" path="res://common/components/health/health_component.tscn" id="5_b4ffb"]
 [ext_resource type="PackedScene" uid="uid://cqtwmijboky64" path="res://common/components/health/damage_component.tscn" id="6_h0hdh"]
+[ext_resource type="PackedScene" uid="uid://8qks23ti62vn" path="res://common/components/effects/on_spawn_effect.tscn" id="7_pkl8e"]
+[ext_resource type="PackedScene" uid="uid://cxctiep6dkfau" path="res://common/components/effects/audio/play_audio_component.tscn" id="8_7jt2a"]
+[ext_resource type="AudioStream" uid="uid://bmkqa14veillu" path="res://entities/bullet/assets/laserSmall_002.ogg" id="9_nxyys"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h0hdh"]
 size = Vector2(4, 4)
@@ -40,3 +43,12 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageComponent"]
 shape = SubResource("RectangleShape2D_h0hdh")
+
+[node name="OnSpawnEffect" parent="." node_paths=PackedStringArray("effect") instance=ExtResource("7_pkl8e")]
+effect = NodePath("PlayAudioComponent")
+
+[node name="PlayAudioComponent" parent="OnSpawnEffect" node_paths=PackedStringArray("audio_player") instance=ExtResource("8_7jt2a")]
+audio_player = NodePath("AudioStreamPlayer2D")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="OnSpawnEffect/PlayAudioComponent"]
+stream = ExtResource("9_nxyys")

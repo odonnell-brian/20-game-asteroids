@@ -15,6 +15,7 @@ func do_fx() -> void:
 		fx.do_fx()
 
 func on_effect_complete() -> void:
+	# TODO: This is a pretty naive way to check if everything is done. Could lead to problems in the future.
 	fx_complete += 1
 
 	if fx_complete >= effects.size():

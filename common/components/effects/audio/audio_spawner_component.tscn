@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3h0eejy8nifk"]
+
+[ext_resource type="Script" uid="uid://i33vvixgv4hg" path="res://common/components/effects/audio/audio_spawner_component.gd" id="1_2aoiv"]
+
+[node name="AudioSpawnerComponent" type="Node2D"]
+script = ExtResource("1_2aoiv")

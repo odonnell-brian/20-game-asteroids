@@ -396,6 +396,7 @@ polygon = PackedVector2Array(0, -47, -32, 48, 33, 48)
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("destroy_fx", "invuln_timer", "hit_fx") instance=ExtResource("10_wvtmh")]
 collision_mask = 0
+max_health = 3
 destroy_on_deplete = false
 destroy_fx = NodePath("../CompositeFxComponent")
 invuln_timer = NodePath("Timer")

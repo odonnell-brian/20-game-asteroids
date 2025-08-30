@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bmv07dwwo87ia"]
+[gd_scene load_steps=11 format=3 uid="uid://bmv07dwwo87ia"]
 
 [ext_resource type="Script" uid="uid://cdljpjstdxyxu" path="res://entities/asteroid/asteroid.gd" id="1_2m4eu"]
 [ext_resource type="Texture2D" uid="uid://osbi3x0ai657" path="res://entities/asteroid/assets/star_tiny.png" id="1_msypq"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dsc1gbyxacfou" path="res://common/components/health/health_component.tscn" id="5_ujanj"]
 [ext_resource type="PackedScene" uid="uid://cqtwmijboky64" path="res://common/components/health/damage_component.tscn" id="6_h2egn"]
 [ext_resource type="PackedScene" uid="uid://mdhyhgba44ni" path="res://common/components/mechanics/score_component.tscn" id="7_h2egn"]
+[ext_resource type="PackedScene" uid="uid://c3h0eejy8nifk" path="res://common/components/effects/audio/audio_spawner_component.tscn" id="8_wpi83"]
+[ext_resource type="AudioStream" uid="uid://bp0b5dxj5cuyr" path="res://entities/asteroid/assets/explosionCrunch_000.ogg" id="9_bivn1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yh8mf"]
 radius = 13.0
@@ -28,9 +30,10 @@ visibility_notifier = NodePath("VisibleOnScreenNotifier2D")
 position = Vector2(-9.53674e-07, -1.19209e-07)
 scale = Vector2(2, 1.9)
 
-[node name="HealthComponent" parent="." instance=ExtResource("5_ujanj")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("destroy_fx") instance=ExtResource("5_ujanj")]
 collision_layer = 4
 collision_mask = 0
+destroy_fx = NodePath("../AudioSpawnerComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
 shape = SubResource("CircleShape2D_yh8mf")
@@ -45,3 +48,6 @@ shape = SubResource("CircleShape2D_yh8mf")
 [node name="ScoreComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("7_h2egn")]
 health_component = NodePath("../HealthComponent")
 amount = 300
+
+[node name="AudioSpawnerComponent" parent="." instance=ExtResource("8_wpi83")]
+audio_stream = ExtResource("9_bivn1")

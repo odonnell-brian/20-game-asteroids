@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://8qks23ti62vn"]
+
+[ext_resource type="Script" uid="uid://dk34hwu4xmkgn" path="res://common/components/effects/on_spawn_effect.gd" id="1_8bxm4"]
+
+[node name="OnSpawnEffect" type="Node2D"]
+script = ExtResource("1_8bxm4")
