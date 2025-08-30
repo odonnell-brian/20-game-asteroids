@@ -20,6 +20,7 @@ texture = ExtResource("1_78c8h")
 
 [node name="SimpleMovementComponent" parent="." instance=ExtResource("2_2kyv7")]
 speed = 1000.0
+initial_direction = Vector2(0, -1)
 
 [node name="DestroyOffScreenComponent" parent="." node_paths=PackedStringArray("visibility_notifier") instance=ExtResource("3_5h0jh")]
 visibility_notifier = NodePath("VisibleOnScreenNotifier2D")

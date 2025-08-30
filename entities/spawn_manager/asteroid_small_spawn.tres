@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SpawnInfo" load_steps=3 format=3 uid="uid://ct2e8dpa7rcw"]
+
+[ext_resource type="PackedScene" uid="uid://daq87bed4e65s" path="res://entities/asteroid/asteroid_large.tscn" id="1_fyuow"]
+[ext_resource type="Script" uid="uid://bmx0aq8wcahcf" path="res://common/model/spawn_info.gd" id="2_dgaaq"]
+
+[resource]
+script = ExtResource("2_dgaaq")
+percent_chance = 0.34
+scene = ExtResource("1_fyuow")
+metadata/_custom_type_script = "uid://bmx0aq8wcahcf"

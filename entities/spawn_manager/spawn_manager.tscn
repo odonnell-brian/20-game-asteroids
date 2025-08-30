@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://dq1b6um0qq0nk"]
+
+[ext_resource type="Script" uid="uid://ddjcshst5ixyy" path="res://entities/spawn_manager/spawn_manager.gd" id="1_nl4a5"]
+[ext_resource type="Script" uid="uid://bmx0aq8wcahcf" path="res://common/model/spawn_info.gd" id="2_fs3ln"]
+[ext_resource type="Resource" uid="uid://64y4s64hg125" path="res://entities/spawn_manager/asteroid_large_spawn.tres" id="3_infqt"]
+[ext_resource type="Resource" uid="uid://htmabrh5ne5c" path="res://entities/spawn_manager/asteroid_medium_spawn.tres" id="4_ce33y"]
+[ext_resource type="Resource" uid="uid://ct2e8dpa7rcw" path="res://entities/spawn_manager/asteroid_small_spawn.tres" id="5_1t1l5"]
+
+[sub_resource type="Curve2D" id="Curve2D_fs3ln"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -171, -186, 0, 0, 0, 0, 1490, -190, 0, 0, 0, 0, 1492, 852, 0, 0, 0, 0, -171, 848, 0, 0, 0, 0, -170, -184)
+}
+point_count = 5
+
+[node name="SpawnManager" type="Node2D" node_paths=PackedStringArray("spawn_timer", "spawn_path")]
+script = ExtResource("1_nl4a5")
+spawn_timer = NodePath("Timer")
+possible_spawns = Array[ExtResource("2_fs3ln")]([ExtResource("3_infqt"), ExtResource("4_ce33y"), ExtResource("5_1t1l5")])
+spawn_path = NodePath("Path2D/PathFollow2D")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_fs3ln")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(-171, -186)
+rotation = -0.00240818

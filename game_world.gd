@@ -7,10 +7,11 @@ func _ready() -> void:
 	Globals.game_world = self
 	Globals.player_destroyed.connect(on_player_destroyed)
 	Globals.restart_game.connect(on_restart_game)
+	Globals.player_ready.connect(Globals.start_game.emit)
 
 func start_game() -> void:
-	instantiate_level()
 	init_gui()
+	instantiate_level()
 	get_tree().paused = false
 
 func clear() -> void:
@@ -18,11 +19,12 @@ func clear() -> void:
 		current_level_node.call_deferred("queue_free")
 
 func instantiate_level() -> void:
-	var level: PackedScene = load("res://levels/test_scene.tscn")
+	var level: PackedScene = load("res://levels/level.tscn")
 	var level_node: Node2D = level.instantiate() as Node2D
 	add_child(level_node)
 	current_level_node = level_node
 	Globals.player_score = 0
+	Globals.level_loaded.emit.call_deferred()
 
 func init_gui() -> void:
 	var hud_scene: PackedScene = load("res://ui/hud/hud.tscn")

@@ -10,7 +10,7 @@ extends Node2D
 @export var num_to_spawn: int = 0
 
 func _ready() -> void:
-	global_rotation = randf_range(0.0, 2 * PI)
+	set_random_rotation()
 	health_component.health_depleted.connect(on_health_depleted)
 
 func impart_parent_velocity(parent_velocity: Vector2) -> void:
@@ -27,3 +27,9 @@ func on_health_depleted() -> void:
 
 		if spawn is Asteroid:
 			(spawn as Asteroid).impart_parent_velocity(movement_component.current_velocity)
+
+func set_random_rotation() -> void:
+	var rand_x = randf_range(0.0, Globals.viewport_size.x)
+	var rand_y = randf_range(0.0, Globals.viewport_size.y)
+
+	look_at(Vector2(rand_x, rand_y))

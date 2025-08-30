@@ -25,7 +25,12 @@ texture = ExtResource("1_dqbf4")
 [node name="SimpleMovementComponent" parent="." instance=ExtResource("3_fqrve")]
 speed = 90.0
 
-[node name="ScreenWrapComponent" parent="." instance=ExtResource("4_wk8ix")]
+[node name="ScreenWrapComponent" parent="." node_paths=PackedStringArray("visibility_notifier") instance=ExtResource("4_wk8ix")]
+visibility_notifier = NodePath("VisibleOnScreenNotifier2D")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="ScreenWrapComponent"]
+position = Vector2(1, 1.5)
+scale = Vector2(5.7, 5.55)
 
 [node name="HealthComponent" parent="." instance=ExtResource("5_mlcd4")]
 collision_layer = 4

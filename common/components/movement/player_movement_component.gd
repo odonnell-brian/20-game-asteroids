@@ -1,6 +1,8 @@
 class_name PlayerMovementComponent
 extends Node2D
 
+signal force_move_complete()
+
 const DEFAULT_VELOCITY_LIMIT: float = 400.0
 const FX_STEP_SCALAR: float = 4.0
 
@@ -19,6 +21,7 @@ const FX_STEP_SCALAR: float = 4.0
 @export var max_velocity: Vector2 = Vector2(DEFAULT_VELOCITY_LIMIT, DEFAULT_VELOCITY_LIMIT)
 @export var rotation_offset_degrees: float = 90.0
 
+var enabled: bool = true
 var move_vector: Vector2
 var current_velocity: Vector2
 
@@ -28,7 +31,7 @@ func _ready() -> void:
 	try_set_node_alpha(brake_sprite, 0.0)
 
 func _physics_process(delta: float) -> void:
-	if not get_parent() is CharacterBody2D:
+	if not enabled or not get_parent() is CharacterBody2D:
 		return
 
 	var parent: CharacterBody2D = get_parent() as CharacterBody2D
@@ -75,3 +78,17 @@ func get_velocity() -> Vector2:
 
 func get_velocity_percent() -> Vector2:
 	return Vector2(current_velocity.x / max_velocity.x, current_velocity.y / max_velocity.y)
+
+func force_move_to(destination: Vector2, duration: float) -> void:
+	enabled = false
+
+	var thruster_tween_time: float = duration / 4
+	var position_tween: Tween = create_tween()
+	position_tween.tween_property(get_parent(), "global_position", destination, duration).from_current().set_ease(Tween.EASE_IN_OUT)
+	position_tween.parallel().tween_property(thruster_sprite, "modulate:a", 1.0, thruster_tween_time).set_trans(Tween.TRANS_SINE)
+	position_tween.parallel().tween_property(thruster_sprite, "modulate:a", 0.0, thruster_tween_time).set_delay(thruster_tween_time * 3)
+	position_tween.tween_callback(on_force_move_complete).set_delay(0.5)
+
+func on_force_move_complete() -> void:
+	enabled = true
+	force_move_complete.emit()
