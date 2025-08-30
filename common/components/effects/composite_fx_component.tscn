@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://xgexv4sg8gal"]
+
+[ext_resource type="Script" uid="uid://c7vgmqjx20j0r" path="res://common/components/effects/composite_fx_component.gd" id="1_hwkrm"]
+
+[node name="CompositeFxComponent" type="Node2D"]
+script = ExtResource("1_hwkrm")

@@ -3,15 +3,16 @@ extends Area2D
 
 signal health_changed(current_health: int)
 signal health_depleted()
+signal destroy_fx_complete()
 
 @export_category("Settings")
 @export var max_health: int = 1
 @export var destroy_on_deplete: bool = true
 
 @export_category("OptionalDependencies")
-@export var destroy_fx: PackedScene
+@export var destroy_fx: FxComponent
 @export var invuln_timer: Timer
-@export var hit_fx: VfxComponent
+@export var hit_fx: FxComponent
 
 var current_health: int
 var is_invulnerable: bool = false
@@ -49,15 +50,12 @@ func handle_invulnerability() -> void:
 	invuln_timer.start()
 
 func try_destroy() -> void:
-	if not destroy_on_deplete:
-		return
-
 	if destroy_fx:
-		var fx: Node2D = destroy_fx.instantiate() as Node2D
-		fx.global_position = global_position
-		Globals.game_world.add_level_child(fx)
+		destroy_fx.effect_complete.connect(destroy_fx_complete.emit)
+		destroy_fx.do_fx()
 
-	get_parent().queue_free()
+	if destroy_on_deplete:
+		get_parent().queue_free()
 
 func on_invulnerability_timeout() -> void:
 	is_invulnerable = false

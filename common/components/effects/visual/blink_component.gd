@@ -1,5 +1,8 @@
 class_name BlinkComponent
-extends VfxComponent
+extends FxComponent
+
+@export_category("Dependencies")
+@export var target: Node2D
 
 @export_category("Settings")
 @export var duration: float = 2.0
@@ -26,6 +29,7 @@ func reset() -> void:
 	run = false
 	time_elapsed = 0.0
 	blink_count = 0
+	effect_complete.emit()
 
 func do_fx() -> void:
 	run = true

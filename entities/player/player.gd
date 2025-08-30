@@ -6,8 +6,9 @@ extends CharacterBody2D
 @export var movement_component: PlayerMovementComponent
 
 func _ready() -> void:
-	health_component.health_depleted.connect(Globals.player_destroyed.emit)
 	health_component.health_changed.connect(Globals.player_lives_changed.emit)
+	health_component.health_depleted.connect(on_health_depleted)
+	health_component.destroy_fx_complete.connect(Globals.player_destroyed.emit)
 
 	Globals.player_data = PlayerData.new(Vector2.ZERO, Vector2.ZERO, health_component.current_health)
 
@@ -25,6 +26,9 @@ func on_level_loaded() -> void:
 func on_health_changed(current_health: int) -> void:
 	Globals.player_data.current_lives = current_health
 	Globals.player_lives_changed.emit(current_health)
+
+func on_health_depleted() -> void:
+	movement_component.enabled = false
 
 class PlayerData:
 	var current_lives: int

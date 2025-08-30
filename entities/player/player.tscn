@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dnb0l2t3thcyt"]
+[gd_scene load_steps=23 format=3 uid="uid://dnb0l2t3thcyt"]
 
 [ext_resource type="Script" uid="uid://blfux5dwor55c" path="res://entities/player/player.gd" id="1_a1qjk"]
 [ext_resource type="Texture2D" uid="uid://xyvqv4oju41h" path="res://entities/player/assets/ship_L.png" id="1_symyc"]
@@ -9,14 +9,314 @@
 [ext_resource type="Texture2D" uid="uid://4bq60xybeh05" path="res://entities/player/assets/shield1.png" id="4_26q78"]
 [ext_resource type="PackedScene" uid="uid://dwxm107wmbp67" path="res://common/components/input/player_input_component.tscn" id="4_bls4j"]
 [ext_resource type="PackedScene" uid="uid://bt58wp5s25h0j" path="res://common/components/mechanics/gun_component.tscn" id="5_fkugw"]
+[ext_resource type="Texture2D" uid="uid://b0n118ryff6h" path="res://entities/player/assets/ship_part_mid.png" id="6_gx6sm"]
+[ext_resource type="Texture2D" uid="uid://cbnrmu2pd0348" path="res://entities/player/assets/ship_part_left.png" id="7_yqrof"]
+[ext_resource type="Texture2D" uid="uid://rx42157eg5n5" path="res://entities/player/assets/ship_part_right.png" id="8_3wlsy"]
 [ext_resource type="PackedScene" uid="uid://cqtwmijboky64" path="res://common/components/health/damage_component.tscn" id="9_bectd"]
 [ext_resource type="PackedScene" uid="uid://dsc1gbyxacfou" path="res://common/components/health/health_component.tscn" id="10_wvtmh"]
-[ext_resource type="PackedScene" uid="uid://bwqly23ruhdje" path="res://common/components/visual/blink_component.tscn" id="11_7thud"]
+[ext_resource type="PackedScene" uid="uid://bwqly23ruhdje" path="res://common/components/effects/visual/blink_component.tscn" id="11_7thud"]
+[ext_resource type="PackedScene" uid="uid://xgexv4sg8gal" path="res://common/components/effects/composite_fx_component.tscn" id="16_we0b7"]
+[ext_resource type="PackedScene" uid="uid://bn8e4qj8ouyg3" path="res://common/components/effects/visual/play_animation_effect.tscn" id="16_yqrof"]
+[ext_resource type="PackedScene" uid="uid://cxctiep6dkfau" path="res://common/components/effects/audio/play_audio_component.tscn" id="17_b2kln"]
+[ext_resource type="AudioStream" uid="uid://crexco1mc5qw4" path="res://entities/player/assets/explosionCrunch_004.ogg" id="18_we0b7"]
+
+[sub_resource type="Animation" id="Animation_gx6sm"]
+resource_name = "destroy"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteScaler/BrakeSprites:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteScaler/ShipSprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpriteScaler/ThrusterSprite:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SpriteScaler/ReverseThrustSprite:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SpriteScaler/DestroyParts/Mid:position")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -50)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SpriteScaler/DestroyParts/Left:position")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-40, 0), Vector2(-90, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("SpriteScaler/DestroyParts/Right:position")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(40, 0), Vector2(90, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("SpriteScaler/DestroyParts:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("SpriteScaler/DestroyParts/Mid:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.872665]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("SpriteScaler/DestroyParts/Left:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.349066]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("SpriteScaler/DestroyParts/Right:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.523599]
+}
+
+[sub_resource type="Animation" id="Animation_yqrof"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteScaler/BrakeSprites:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteScaler/ShipSprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpriteScaler/ThrusterSprite:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SpriteScaler/ReverseThrustSprite:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SpriteScaler/DestroyParts/Mid:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SpriteScaler/DestroyParts/Left:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-40, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("SpriteScaler/DestroyParts/Right:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(40, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("SpriteScaler/DestroyParts:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("SpriteScaler/DestroyParts/Mid:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("SpriteScaler/DestroyParts/Left:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("SpriteScaler/DestroyParts/Right:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("SpriteScaler/DestroyParts:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3wlsy"]
+_data = {
+&"RESET": SubResource("Animation_yqrof"),
+&"destroy": SubResource("Animation_gx6sm")
+}
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health_component", "movement_component")]
 script = ExtResource("1_a1qjk")
 health_component = NodePath("HealthComponent")
 movement_component = NodePath("PlayerMovementComponent")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3wlsy")
+}
 
 [node name="SpriteScaler" type="Node2D" parent="."]
 scale = Vector2(0.5, 0.5)
@@ -43,6 +343,19 @@ texture = ExtResource("4_26q78")
 
 [node name="ShipSprite" type="Sprite2D" parent="SpriteScaler"]
 texture = ExtResource("1_symyc")
+
+[node name="DestroyParts" type="Node2D" parent="SpriteScaler"]
+
+[node name="Mid" type="Sprite2D" parent="SpriteScaler/DestroyParts"]
+texture = ExtResource("6_gx6sm")
+
+[node name="Left" type="Sprite2D" parent="SpriteScaler/DestroyParts"]
+position = Vector2(-40, 0)
+texture = ExtResource("7_yqrof")
+
+[node name="Right" type="Sprite2D" parent="SpriteScaler/DestroyParts"]
+position = Vector2(40, 0)
+texture = ExtResource("8_3wlsy")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 visible = false
@@ -81,10 +394,10 @@ visible = false
 scale = Vector2(0.5, 0.5)
 polygon = PackedVector2Array(0, -47, -32, 48, 33, 48)
 
-[node name="HealthComponent" parent="." node_paths=PackedStringArray("invuln_timer", "hit_fx") instance=ExtResource("10_wvtmh")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("destroy_fx", "invuln_timer", "hit_fx") instance=ExtResource("10_wvtmh")]
 collision_mask = 0
-max_health = 3
 destroy_on_deplete = false
+destroy_fx = NodePath("../CompositeFxComponent")
 invuln_timer = NodePath("Timer")
 hit_fx = NodePath("../BlinkComponent")
 
@@ -98,3 +411,16 @@ wait_time = 2.0
 
 [node name="BlinkComponent" parent="." node_paths=PackedStringArray("target") instance=ExtResource("11_7thud")]
 target = NodePath("../SpriteScaler")
+
+[node name="CompositeFxComponent" parent="." node_paths=PackedStringArray("effects") instance=ExtResource("16_we0b7")]
+effects = [NodePath("PlayAnimationEffect"), NodePath("PlayAudioComponent")]
+
+[node name="PlayAnimationEffect" parent="CompositeFxComponent" node_paths=PackedStringArray("animation_player") instance=ExtResource("16_yqrof")]
+animation_player = NodePath("../../AnimationPlayer")
+animation_name = "destroy"
+
+[node name="PlayAudioComponent" parent="CompositeFxComponent" node_paths=PackedStringArray("audio_player") instance=ExtResource("17_b2kln")]
+audio_player = NodePath("AudioStreamPlayer2D")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="CompositeFxComponent/PlayAudioComponent"]
+stream = ExtResource("18_we0b7")
